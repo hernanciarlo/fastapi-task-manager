@@ -1,13 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from collections.abc import Generator
+
 from app.schemas.user import UserCreate, UserLogin
 from app.models.user import User
 from app.core.security import hash_password, verify_password, create_access_token
 from app.db.session import SessionLocal
 from app.core.auth_utils import get_current_user
-from collections.abc import Generator
 
-router = APIRouter()
+router = APIRouter(prefix="/auth", tags=["auth"])
 
 
 def get_db() -> Generator[Session, None, None]:
